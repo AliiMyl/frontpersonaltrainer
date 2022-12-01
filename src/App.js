@@ -39,7 +39,7 @@ function App() {
     const {children, value, index} = props
     return (
     <div>
-      {value==index &&(
+      {value===index &&(
         <h1>{children}</h1>
       )}
     </div>

@@ -29,7 +29,7 @@ function Customers(){
      // hakee customer olion
   const addCustomer = (customer) => {
     console.log("ollaan customers.js addCustomer metodissa");
-    // rest rajapintaa käyttäen ptiäisi saada cusotmer lisättyä
+    // rest rajapintaa käyttäen ptiäisi saada customer lisättyä
     fetch("https://customerrest.herokuapp.com/api/customers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,7 +43,7 @@ function Customers(){
   };
 
   const deleteCustomer = (link) => {
-    fetch(link, { method: "DELETE" }).then((response) => {
+    fetch( link, { method: "DELETE" }).then((response) => {
       if (response.ok) {
         fetchCustomers();
       }
@@ -106,6 +106,7 @@ function Customers(){
           <IconButton color="error" onClick={() => deleteCustomer(params.value)}>
               <DeleteIcon />
           </IconButton>
+
           ),
         },
       ]);
