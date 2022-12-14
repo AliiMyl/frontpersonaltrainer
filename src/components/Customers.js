@@ -6,8 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import EditCustomer from './EditCustomer';
+import UpdateCustomer from './EditCustomer';
 import AddCustomer from './AddCustomer';
+
 
 function Customers(){
 
@@ -42,43 +43,32 @@ function Customers(){
       })
   };
 
+  // tässä poistamme customerin kun olemme saaneet linkin alempaa
   const deleteCustomer = (link) => {
-    fetch( link, { method: "DELETE" }).then((response) => {
-      if (response.ok) {
-        fetchCustomers();
+    console.log("Deletoidaan");
+    fetch(link, {
+      method: "DELETE"
+   })
+    .then(response => fetchCustomers())
+    .catch(error => console.error(error))
       }
-    });
-  };
 
-  const updateCustomer = (updateCustomer, link) => {
-    console.log("Update funktio");
-    fetch("https://customerrest.herokuapp.com/api/customers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updateCustomer),
-    })
-      .then((response) => {
-        if (response.ok) {
-          fetchCustomers();
-        }
-      })
-  };
+// päivitetään customer tiedot
+const updateCustomer = (customer, link) => {
+  console.log("Update funktio");
+  fetch(link , {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(customer),
+  })
+    .then(response => fetchCustomers())
+    .catch(err => console.error(err));
+};
+
     
     // laitetaan tiedot columneihin nätisti
     const [columnDefs, setColumnDefs] = useState([
-      {
-        headerName: "",
-        width: 100,
-        field: "_links.rel.href",
-        cellRenderer: (params) => (
-          //Tämän tulisi lisätä uusi training "Add training"
-          <IconButton color="primary" // onClick={() => updateCustomer(params.value)}
-          >
-            <AddCircleIcon />
-        </IconButton>
   
-        ),
-      },
         { field: 'firstname', sortable: true, filter: true  },
         { field: 'lastname', sortable: true, filter: true  },
         { field: 'streetaddress', sortable: true, filter: true  },
@@ -89,19 +79,19 @@ function Customers(){
         {
           headerName: "",
           width: 100,
-          field: "_links.rel.href", //self.href
+        //  field: "data.links[1].href", //MITÄ VITTUA //params={params}
           cellRenderer: (params) => (
-            //<EditCustomer updateCustomer={updateCustomer} params={params}/>
-            <IconButton color="secondary" onClick={() => updateCustomer(params.value)}>
-              <EditIcon />
-          </IconButton>
+            <UpdateCustomer  data={params.data} updateCustomer={updateCustomer} params={params}/>
+          //  <IconButton color="secondary" onClick={() => updateCustomer(params.value)}>
+           //   <EditIcon />
+         // </IconButton>
     
           ),
         },
         {
-          headerName: '',
+          headerName: "",
           width: 100, 
-          field: '_links.rel.href',
+          field: "links.0.href",
           cellRenderer: (params) => (
           <IconButton color="error" onClick={() => deleteCustomer(params.value)}>
               <DeleteIcon />

@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
+//import DialogContentText from "@mui/material/DialogContentText";
 
 export default function AddCustomer({addCustomer}) {
   //dialogi toimii ikkunana ja aukeaa modaalisesti
@@ -27,7 +27,6 @@ export default function AddCustomer({addCustomer}) {
   };
 
 const handleClickOpen = () => {
-    //Painetaan lisää customer
     setOpen(true);
 }
   const handleCancel = () => {
@@ -75,7 +74,7 @@ const handleClickOpen = () => {
             name="streetaddress"
             value={customer.streetaddress}
             margin="dense"
-            label="streetaddres"
+            label="streetaddress"
             type="text"
             fullWidth
             variant="standard"

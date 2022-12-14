@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 
-export default function EditCustomer({updateCustomer, params}) {
+export default function EditCustomer({params}) {
   //dialogi toimii ikkunana ja aukeaa modaalisesti
   const [open, setOpen] = React.useState(false);
   const [customer, setCustomer] = React.useState({
@@ -21,7 +21,8 @@ export default function EditCustomer({updateCustomer, params}) {
   });
 
   const handleClickOpen = () => {
-    console.log("Painettiin lisää customer");
+    console.log(params.customer);
+    console.log("Painettiin update customer");
     setOpen(true);
     setCustomer({
         firstname: params.data.firstname,
@@ -36,12 +37,12 @@ export default function EditCustomer({updateCustomer, params}) {
 
   const handleClose = () => {
     console.log("handleclose kutsuttu");
+    
     setOpen(false);
   };
 
-const handleSave = () => {
-    updateCustomer(customer, params.value);
-    setOpen(false);
+const updateCustomer = () => {
+   params.updateCustomer(customer, params.customer.links.href);
 }
   const handleCancel = () => {
     console.log("painettiin cancel");
@@ -60,13 +61,13 @@ const handleSave = () => {
       </Button>
       <Dialog onClose={handleClose} open={open}>
         <DialogContent>
-        <DialogTitle>New Customer</DialogTitle>
+        <DialogTitle>Edit Customer</DialogTitle>
           <TextField
             autoFocus
             name="firstname"
             value={customer.firstname}
             margin="dense"
-            label="firstname"
+            label="Firstname"
             type="text"
             fullWidth
             variant="standard"
@@ -77,7 +78,7 @@ const handleSave = () => {
             name="lastname"
             value={customer.lastname}
             margin="dense"
-            label="lastname"
+            label="Lastname"
             type="text"
             fullWidth
             variant="standard"
@@ -88,7 +89,7 @@ const handleSave = () => {
             name="streetaddress"
             value={customer.streetaddress}
             margin="dense"
-            label="streetaddress"
+            label="Streetaddress"
             type="text"
             fullWidth
             variant="standard"
@@ -99,7 +100,7 @@ const handleSave = () => {
             name="postcode"
             value={customer.postcode}
             margin="dense"
-            label="postcode"
+            label="Postcode"
             type="text"
             fullWidth
             variant="standard"
@@ -110,7 +111,7 @@ const handleSave = () => {
             name="city"
             value={customer.city}
             margin="dense"
-            label="city"
+            label="City"
             type="text"
             fullWidth
             variant="standard"
@@ -121,18 +122,18 @@ const handleSave = () => {
             name="email"
             value={customer.email}
             margin="dense"
-            label="email"
+            label="Email"
             type="text"
             fullWidth
             variant="standard"
             onChange={inputChanged}
           />
-           <TextField
+         <TextField
             autoFocus
             name="phone"
             value={customer.phone}
             margin="dense"
-            label="phone"
+            label="Phone"
             type="text"
             fullWidth
             variant="standard"
@@ -140,7 +141,7 @@ const handleSave = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={updateCustomer}>Save</Button>
           <Button onClick={handleCancel}>Cancel</Button>
         </DialogActions>
       </Dialog>
